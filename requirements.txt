@@ -2,3 +2,4 @@ pandas==2.2
 boto3==1.34
 plotly==5.22
 dash==2.17
+pyarrow==16.1
