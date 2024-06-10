@@ -47,7 +47,7 @@ jobs:
           cpu : 0.25
           memory : 0.5
           port: 8080
-          wait-for-service-stability: true
+          wait-for-service-stability-seconds: 300
       
       - name: App Runner output
         run: echo "App runner output ${{ steps.deploy-apprunner.outputs.service-id }}" 
