@@ -1,4 +1,6 @@
 import boto3
+import io
+import pyarrow.parquet as pq
 import pandas as pd
 from dash import Dash, dcc, html
 import plotly.express as px
@@ -21,7 +23,9 @@ df = None
 try:
     s3 = boto3.client('s3')
     obj = s3.get_object(Bucket='gdelt-data-prod', Key='day-scores.parquet')
-    df = pd.read_parquet(obj['Body'])
+    buffer = io.BytesIO(obj['Body'].read())
+    table = pq.read_table(buffer)
+    df = table.to_pandas()
     df = df.sort_values('day_scores', ascending=False).head(20)
     df = df.sort_values('day_scores', ascending=True)
 except Exception as e:
